@@ -1,5 +1,8 @@
-# coding: utf-8
+#Author Bo.Lei
+#email pope.b.lei@gmail.com
+#2020.02.29
 
+# coding: utf-8
 import sys
 import math
 import pandas as pd
@@ -11,15 +14,15 @@ import shutil
 import logging
 
 fmt = '%(asctime)s %(levelname)s %(name)s %(lineno)s %(message)s'
-logging.basicConfig(level='DEBUG', format=fmt, filename='Rug.log', filemode='w')
+logging.basicConfig(level='DEBUG', format=fmt, filename='Run.log', filemode='w')
 syslogger = logging.getLogger('system')
 
 class replace_operation():
     
-    def __init__():
+    #def __init__():
     
-    @classmothod
-    def set(target, substitute, source_file, output_file):
+    @classmethod
+    def set(cls, target, substitute, source_file, output_file):
         replace_pattern = target
         
         #Regular expressions mean find the string follows target within a space
@@ -59,8 +62,8 @@ class replace_operation():
             for line in output_line_result:
                 file_object.write(line)
 
-    @classmothod
-    def get(target, substitute, source_file, output_file):
+    @classmethod
+    def get(cls, target, substitute, source_file, output_file):
         replace_get_pattern = target
         output_line_result = []
         with open(source_file, encoding='utf-8') as file_obj:
@@ -69,7 +72,7 @@ class replace_operation():
                 find = re.search(replace_get_pattern, line)
                 if find:
                     value = find.group()
-                    result_str = re.sub(replace_get_pattern, subsititute, line)
+                    result_str = re.sub(replace_get_pattern, substitute, line)
                     output_line_result.append(result_str)
                     continue
                 output_line_result.append(line)
@@ -79,8 +82,8 @@ class replace_operation():
             for line in output_line_result:
                 file_object.write(line)
 
-    @classmothod
-    def rep(target, substitute, source_file, output_file):
+    @classmethod
+    def rep(cls,target, substitute, source_file, output_file):
         #target should followed by space
         
         ''''
@@ -106,6 +109,8 @@ class replace_operation():
         with open(output_file, 'w+') as file_object:
             for line in output_line_result:
                 file_object.write(line)
+def PrintVersion():
+    print('version 0')
 
 if __name__ == "__main__":
     syslogger.info(sys.argv)
@@ -115,9 +120,9 @@ if __name__ == "__main__":
     output_line_result = []
     output_line_result2 = []
     
-    if(len(sys.arv) == 2):
+    if(len(sys.argv) == 2):
         if '-v' in sys.argv:
-            #PrintVersion()
+            PrintVersion()
         elif '-h' in sys.argv:
             PrintHelp()
             exit(0)
@@ -145,5 +150,6 @@ if __name__ == "__main__":
                 replace_operation.rep(line[1], line[2], source_file, output_file)
             else:
                 syslogger.error('operater error')
-            
+            #every loop process a row in mapping file. So we need copy out file to input for next loop.
+            #Thus we can get all result in a single file
             shutil.copyfile(output_file, source_file)

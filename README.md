@@ -91,3 +91,18 @@ Usage:
    set   "struct_variable->data = "            "struct_set_data_operation(struct_variable->index,"
    get   "struct_variable->data"               "struct_get_data_operation(struct_variable->index"
    rep   "data"                                "_data.data"
+
+Run command:
+  In path of src, use python(above 3.5) run command:
+  \c_source_code_replace\src>python c_sourceCode_replace.py mapping_file.csv test.c
+
+Test result:
+  @@ -21,6 +21,6 @@ original_demo_function()
+ {
+   t_data *struct_variable = &global_struct;
+
+-  struct_variable->data = 0x88; //set value operation
+-  int local_data = struct_variable->data;//get value operation
++  struct_set_data_operation(struct_variable->index, 0x88) ; //set value operation
++  int local_data = struct_get_data_operation(struct_variable->index);//get value operation
+ }
