@@ -23,4 +23,9 @@ original_demo_function()
 
   struct_set_data_operation(struct_variable->index, 0x88) ; //set value operation
   int local_data = struct_get_data_operation(struct_variable->index);//get value operation
+  for (i=0; i<8; i++)
+  {
+       struct_set_data_operation(i, 0x66) ;
+       temp_log = struct_get_data_operation(i);
+  }
 }
