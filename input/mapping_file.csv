@@ -1,2 +1,4 @@
 set,struct_variable->data =,struct_set_data_operation(struct_variable->index
+set,struct_variable\[i\].data =,struct_set_data_operation(i
 get,struct_variable->data,struct_get_data_operation(struct_variable->index)
+get,struct_variable\[i\].data,struct_get_data_operation(i)
